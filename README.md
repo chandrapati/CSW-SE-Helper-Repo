@@ -8,8 +8,8 @@ evidence collection, and executive readout.
 
 ## Runbooks
 
-- `master-pov-process.md` - common CSW POV process for any customer.
-- `first-meeting-discovery-runbook.md` - first customer meeting flow, initial discovery questions, demo talk track, and vertical-specific discovery questions for the SA.
+- `master-pov-process.md` - common CSW POV process, success criteria, label strategy, and integration guidance for any customer.
+- `first-meeting-discovery-runbook.md` - first customer meeting flow, initial discovery questions, demo talk track, success criteria, labels, ServiceNow / AD / manual label discovery, and vertical-specific discovery questions for the SA.
 - `financial-services-pov.md` - banks, insurers, fintech, payments, DORA, PCI, SWIFT, SOC 2.
 - `healthcare-pov.md` - providers, payers, life sciences, HIPAA, HITRUST, ePHI.
 - `it-services-pov.md` - MSPs, SaaS, outsourcing, SOC 2, ISO 27001, customer tenant isolation.

@@ -74,6 +74,104 @@ Use these questions before going into vertical-specific detail. The goal is to q
 - Are there cloud accounts, data centers, or operating systems we should exclude?
 - Who should attend the POV kickoff: app owner, server team, network team, security operations, compliance, and change management?
 
+## Success Criteria, Labels, and Integrations
+
+Use this section in the first meeting to move from "interesting demo" to a measurable POV. CSW outcomes depend on knowing what success looks like and whether workload context can be trusted.
+
+### Success Criteria Discovery
+
+- What decision should the POV help you make: expand visibility, move to enforcement, support an audit, reduce ransomware blast radius, or validate a migration?
+- What would be a clear win after 30 days?
+- Which application owner must confirm that the dependency map is accurate?
+- Which risk finding would be meaningful to leadership: unknown flows, excessive access, internet egress, high-risk ports, plaintext protocols, or vulnerable workloads?
+- Should success include a policy simulation only, or a bounded enforcement pilot?
+- What evidence artifact would you want to show an auditor, board member, or application owner?
+
+### Good CSW Success Criteria Examples
+
+| Outcome | Measurable success criteria | Why it matters |
+|---|---|---|
+| Visibility | Identify at least 90 percent of in-scope workload dependencies for one application | Proves CSW can replace guesswork and stale diagrams with observed behavior |
+| Scope design | Build a reviewed scope tree and label set for one business service or regulated boundary | Makes the POV repeatable and aligns security policy to how the customer thinks about the application |
+| Risk discovery | Identify and classify unexpected flows, high-risk ports, plaintext protocols, or internet egress | Gives the customer immediate findings even before enforcement |
+| ADM policy | Generate an application dependency map and candidate policy approved by the app owner | Shows that CSW can turn visibility into segmentation design |
+| Simulation | Run policy simulation without production impact and review violations | Reduces fear of breaking the application |
+| Enforcement | Enforce one low-risk, tightly scoped policy with rollback approval | Proves operational feasibility without overreaching |
+| Evidence | Produce an exportable evidence package: inventory, scopes, flows, policy, exceptions, and gaps | Converts the POV into something compliance, risk, and leadership can use |
+
+### Label Strategy Questions
+
+- What is the source of truth for application ownership: CMDB, ServiceNow, cloud tags, Active Directory, spreadsheets, or tribal knowledge?
+- Which labels are mandatory for the POV: `app`, `env`, `owner`, `data_class`, `criticality`, `compliance`, `region`, `lifecycle`?
+- Which labels can be imported or synchronized, and which must be manually assigned?
+- Who owns label hygiene after the POV?
+- How will exceptions be labeled: temporary, approved, expired, decommissioning, or unknown?
+- Which labels should drive scopes and policies versus reporting only?
+
+### Why Labels Matter
+
+Labels are the bridge between raw workload telemetry and business meaning. CSW can see flows, ports, processes, and packages, but labels explain what the workload is, who owns it, what data it handles, and which policy boundary it belongs to. Without labels, the POV becomes a traffic report. With labels, the POV becomes application segmentation, compliance evidence, and an operational workflow.
+
+### Recommended Label Set
+
+| Label | Example values | Why we need it |
+|---|---|---|
+| `app` | `payments`, `ehr`, `claims`, `tenant-portal` | Groups workloads into a business service or ADM workspace |
+| `env` | `prod`, `stage`, `dev`, `test` | Prevents non-production traffic from polluting production policy |
+| `owner` | `payments-team`, `clinical-apps`, `platform`, `ot` | Assigns findings, exceptions, and approvals to a real team |
+| `data_class` | `public`, `internal`, `confidential`, `pci`, `phi`, `cui` | Connects segmentation to regulated data boundaries |
+| `criticality` | `critical`, `high`, `medium`, `low` | Helps prioritize risk and enforcement candidates |
+| `compliance` | `pci`, `hipaa`, `soc2`, `cmmc`, `dora`, `none` | Supports audit-specific reporting and scoping |
+| `region` | `us-east`, `eu-west`, `datacenter-1`, `plant-01` | Helps with residency, operations, and site-specific expansion |
+| `lifecycle` | `active`, `exception`, `decommissioning`, `unknown` | Prevents stale systems from becoming permanent blind spots |
+
+### ServiceNow Integration Questions
+
+- Is ServiceNow the CMDB or system of record for applications, servers, owners, business services, or change tickets?
+- Are CI records accurate enough to use for CSW labels?
+- Can ServiceNow provide application owner, support group, environment, criticality, and business service fields?
+- Should CSW findings create ServiceNow incidents, tasks, or change records?
+- Who owns reconciliation when CSW observes a workload that is missing or wrong in the CMDB?
+- Does the POV need a ServiceNow integration now, or is CSV export/import enough for the first phase?
+
+### Why ServiceNow Matters
+
+ServiceNow can make CSW operational instead of just analytical. CSW discovers what workloads do; ServiceNow often knows who owns them, which business service they support, and how changes are approved. Connecting the two helps route findings, assign exceptions, validate CMDB accuracy, and attach evidence to change or audit workflows.
+
+### Active Directory and Identity Questions
+
+- Is Active Directory or Entra ID the source for server ownership, OU placement, admin groups, or application teams?
+- Do server naming standards or OUs map to applications, environments, or business units?
+- Are there AD groups that identify privileged admins, application teams, or regulated access?
+- Can AD data help enrich labels such as `owner`, `env`, `business_unit`, or `criticality`?
+- Are there stale computer objects or naming inconsistencies that would make AD labels unreliable?
+
+### Why Active Directory Matters
+
+Active Directory can provide useful context, especially for Windows-heavy environments. It can help infer ownership, environment, business unit, or admin responsibility. However, AD is rarely perfect for application dependency mapping by itself. Treat it as an enrichment source, not the only source of truth.
+
+### Manual Label Questions
+
+- Which labels will need to be manually assigned during the POV?
+- Who is allowed to approve or change manual labels?
+- How will manual labels be reviewed for accuracy?
+- Which workloads are unknown and need temporary labels?
+- What is the plan to replace manual labels with an authoritative source after the POV?
+
+### Why Manual Labels Still Matter
+
+Manual labels are useful early in a POV because they let the team move quickly when CMDB, AD, or cloud tags are incomplete. They should be controlled and reviewed. Manual labels are a starting point for the POV, not a long-term substitute for a governed inventory and ownership model.
+
+### Integration Readiness Decision
+
+| Source | Use during POV? | Best use | Caution |
+|---|---|---|---|
+| ServiceNow CMDB | Yes, if ownership data is reliable | App owner, business service, criticality, support group, change workflow | Bad CMDB data creates bad labels |
+| Active Directory / Entra ID | Yes, as enrichment | Windows server context, groups, OUs, admin ownership hints | Naming and OU structure may not reflect application reality |
+| Cloud tags | Yes, when available | App, owner, environment, cost center, region | Tag quality varies by account/subscription |
+| Manual labels | Yes, for fast POV progress | Unknown workloads, quick app grouping, exception tagging | Must be reviewed and governed |
+| CSV import/export | Yes, as a low-friction first step | Fast mapping when integrations are not ready | Can become stale quickly |
+
 ## First Customer Demo Flow
 
 Use this as a lightweight first-meeting demo path. Keep it short and outcome-oriented; do not turn the first meeting into a full product training session.

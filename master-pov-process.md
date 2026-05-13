@@ -28,6 +28,21 @@ This runbook defines the common process for starting and running a Cisco Secure 
 - Success criteria written in business language.
 - Customer understands that the first phase is visibility and simulation, not immediate enforcement.
 
+### Success Criteria Patterns
+
+Use success criteria that prove a decision, not generic activity. Good POV criteria are measurable, scoped to one application or boundary, and tied to an owner.
+
+| Category | Example success criteria |
+|---|---|
+| Visibility | CSW identifies expected and unexpected flows for one application over an agreed observation window |
+| Ownership | At least one application owner validates the dependency map and approves the scope tree |
+| Labels | Required labels exist for in-scope workloads: `app`, `env`, `owner`, `data_class`, `criticality`, and `compliance` |
+| Risk | The POV identifies high-risk ports, plaintext protocols, unexpected egress, or vulnerable workloads with owner assignment |
+| ADM | CSW generates a candidate policy from observed flows and the app team reviews it |
+| Simulation | Policy simulation runs without enforcement impact and produces actionable violations |
+| Enforcement | One bounded enforcement candidate is approved with rollback steps, if the customer is ready |
+| Evidence | The final package includes inventory, scope, labels, flows, policy candidate, exceptions, and gaps |
+
 ## Phase 1 - Readiness and Access
 
 ### Required Inputs
@@ -79,6 +94,52 @@ Start with monitoring only.
 - `compliance`
 - `region`
 - `lifecycle`
+
+### Why Labels Are Required
+
+CSW telemetry shows what is happening. Labels explain what it means. Labels connect workloads to applications, owners, environments, regulated data, and criticality. Without a label strategy, CSW can still show flows, but policy design and audit evidence become harder to trust and repeat.
+
+### Label Source Strategy
+
+| Source | When to use it | Why it helps | Risk |
+|---|---|---|---|
+| ServiceNow CMDB | Use when CI ownership, business service, and criticality fields are reliable | Aligns CSW scopes and findings to operational owners and change workflows | Inaccurate CMDB data can mislabel workloads |
+| Active Directory / Entra ID | Use as enrichment for Windows servers, OUs, groups, and ownership hints | Helps infer environment, owner, admin group, or business unit | OU structure and naming standards may not match application reality |
+| Cloud tags | Use for AWS, Azure, and GCP workloads where tagging is governed | Provides app, owner, environment, region, and cost-center context | Tags may be missing or inconsistent across accounts |
+| Manual labels | Use for fast POV progress and unknown workloads | Lets the team build scopes before integrations are ready | Requires review and should not become unmanaged long-term data |
+| CSV import/export | Use as a low-friction bridge | Fastest way to test a label model with app owners | Static files drift quickly |
+
+### ServiceNow Integration Guidance
+
+ServiceNow is valuable when it is the source of truth for applications, business services, ownership, support groups, criticality, or change records. In a POV, ServiceNow can be used in three maturity levels:
+
+1. **Manual export/import:** Use a CSV from ServiceNow to label CSW workloads quickly.
+2. **Operational workflow:** Use ServiceNow ownership and change records to route CSW findings and policy exceptions.
+3. **Continuous integration:** Keep CMDB, CSW labels, and exception workflow synchronized after the POV.
+
+Ask the customer to identify the ServiceNow fields that matter before kickoff:
+
+- Business service.
+- Application name.
+- CI owner.
+- Support group.
+- Environment.
+- Criticality.
+- Data classification.
+- Compliance scope.
+- Change record or exception record.
+
+### Active Directory and Manual Label Guidance
+
+Active Directory is useful when Windows server names, OUs, groups, or admin assignments reflect business ownership. Use it to enrich labels, not to replace application owner validation.
+
+Manual labels are acceptable in the POV when authoritative sources are incomplete. Keep them controlled:
+
+- Document who applied the label.
+- Document why it was applied.
+- Review labels with the application owner.
+- Mark temporary or uncertain labels clearly.
+- Create a follow-up task to replace manual labels with CMDB, cloud tag, or identity-source data where possible.
 
 ### Scope Design
 
