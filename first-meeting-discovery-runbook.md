@@ -30,6 +30,101 @@ By the end of the first meeting, the SA should know:
 
 "The goal today is not to design the full deployment. The goal is to pick the right first workload or environment where CSW can prove value quickly: visibility, dependency mapping, segmentation policy, risk reduction, and evidence. We will keep the first POV scoped tightly so the results are credible and actionable."
 
+## Initial Discovery Questions
+
+Use these questions before going into vertical-specific detail. The goal is to quickly determine whether the customer needs CSW for visibility, segmentation, compliance evidence, incident response, or enforcement.
+
+### Customer Situation
+
+- What prompted this meeting?
+- What are you trying to improve: visibility, segmentation, compliance evidence, ransomware readiness, audit response, cloud migration, or application dependency mapping?
+- Is there a deadline driving this work, such as an audit, board review, incident follow-up, renewal, migration, or regulatory milestone?
+- Which business service or application would create the most value if we mapped and segmented it first?
+- What is currently painful or manual about understanding workload communication?
+
+### Current Visibility
+
+- How do you know what talks to what today?
+- Do application owners trust the current network diagrams?
+- Do firewall rules or cloud security groups reflect the real application dependencies?
+- Can you identify process-level communication, or only IP/port traffic?
+- Can you quickly answer which workloads have high-risk ports, plaintext protocols, or unexpected internet egress?
+
+### Current Segmentation
+
+- Where is segmentation enforced today: firewall, VLAN, cloud security group, Kubernetes policy, host firewall, or manual rule review?
+- Is the current model mostly north-south, east-west, or both?
+- Which applications are over-permitted because nobody wants to break them?
+- Which environment is safest for the first POV: lab, non-production, production monitoring only, or a bounded production app?
+- What would need to be true before you would consider enforcement?
+
+### Compliance and Risk
+
+- Which framework matters most for this discussion: PCI, HIPAA, SOC 2, ISO 27001, NIST, CMMC, DORA, NIS2, NERC CIP, or internal policy?
+- What evidence does the audit or risk team ask for repeatedly?
+- What evidence is hard to produce today?
+- Do you need proof of segmentation, proof of inventory, proof of policy operation, or proof of incident investigation?
+- Are there crown-jewel applications, regulated data zones, or high-value assets we should prioritize?
+
+### POV Readiness
+
+- Can we get a representative workload list before kickoff?
+- Can sensors be installed on the candidate workloads?
+- Who approves sensor deployment and change windows?
+- Are there cloud accounts, data centers, or operating systems we should exclude?
+- Who should attend the POV kickoff: app owner, server team, network team, security operations, compliance, and change management?
+
+## First Customer Demo Flow
+
+Use this as a lightweight first-meeting demo path. Keep it short and outcome-oriented; do not turn the first meeting into a full product training session.
+
+### Demo Setup
+
+Before the meeting, prepare a demo tenant, screenshots, or recorded flow that shows:
+
+- Workload inventory.
+- Scope hierarchy.
+- Application dependency map.
+- Flow search.
+- ADM-generated policy.
+- Policy simulation or enforcement view.
+- Vulnerability or high-risk communication context, if relevant.
+
+### 15-Minute Demo Path
+
+| Time | Demo step | Message |
+|---:|---|---|
+| 0-2 min | Show workload inventory | "CSW starts by making the workload estate visible, including owners, labels, OS, packages, and telemetry coverage." |
+| 2-5 min | Show application scope | "We organize workloads around the business service or compliance boundary, not just subnets." |
+| 5-8 min | Show observed flows | "This is the live dependency evidence: source, destination, port, protocol, process, and observed behavior." |
+| 8-11 min | Show ADM policy | "CSW turns observed behavior into a policy candidate the app owner can review before enforcement." |
+| 11-13 min | Show risk context | "The same view can highlight high-risk ports, plaintext protocols, unexpected egress, or vulnerable workloads." |
+| 13-15 min | Show evidence output | "The POV output becomes an evidence package: inventory, flows, scope, policy candidate, exceptions, and expansion plan." |
+
+### Demo Questions To Ask While Showing CSW
+
+- Would your application owner recognize this dependency map?
+- Which flow on this screen would be hardest for you to prove today?
+- Which of these communications would you expect to be denied in a least-privilege model?
+- Would this level of evidence help with your audit, incident response, or segmentation project?
+- If we did this with one of your applications, which app should we start with?
+
+### Demo Do's
+
+- Keep the story focused on one application.
+- Tie every screen to a customer pain.
+- Use the customer's vertical language: CDE, ePHI, CUI, tenant, IBF, OT-facing IT, production boundary.
+- Emphasize monitoring and simulation before enforcement.
+- End by confirming the POV candidate scope.
+
+### Demo Don'ts
+
+- Do not promise instant enforcement.
+- Do not imply CSW replaces firewalls, IAM, EDR, GRC, SIEM, or assessor judgment.
+- Do not pick a scope so large that the POV becomes an enterprise deployment.
+- Do not skip application owner validation.
+- Do not demo every feature if the customer only cares about one outcome.
+
 ## Universal Discovery Questions
 
 ### Business Driver
